@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+  <body>
+    <%- include("../menu"); %>
+    <button
+      type="button"
+      onclick="location.href='/api/note/<%=noteid%>/new'"
+      class="btn btn-primary"
+    >
+      문제 등록
+    </button>
+
+    <div class="row row-cols-1 row-cols-md-5">
+      <% result.forEach(question => { %>
+      <div class="col mb-4">
+        <!-- Card -->
+        <div class="card">
+          <!--Card image-->
+          <div class="view overlay">
+            <img
+              class="card-img-top"
+              src="data:question/<%=question.qimage.contentType%>;base64, 
+          <%=question.qimage.data.toString('base64')%>"
+              alt="Card image cap"
+            />
+            <a href="/api/note/<%=question.noteid%>/<%=question._id%>">
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+
+          <!--Card content-->
+          <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title"><%= question.title %></h4>
+            <!--Text-->
+            <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+            <button
+              type="button"
+              class="btn btn-blue btn-md"
+              onclick="location.href= '/api/note/<%=question.noteid%>/<%=question._id%>'"
+            >
+              자세히
+            </button>
+
+            <button
+              id="q_deleteBtn"
+              type="button"
+              class="btn btn-red btn-md"
+              onclick="deletequestion('<%=question.noteid%>', '<%=question._id%>')"
+            >
+              삭제
+            </button>
+          </div>
+        </div>
+        <!-- Card -->
+      </div>
+      <% }) %>
+    </div>
+    <%- include("../footer"); %>
+    <script>
+      // 삭제
+      function deletequestion(note_id, qid) {
+        const result = confirm("삭제하시겠습니까?");
+        if (result) {
+          $.ajax({
+            url: "/api/note/" + note_id + "/" + qid,
+            type: "DELETE",
+          })
+            .done(() => {
+              location.href = "/api/note/" + note_id;
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        } else {
+          console.log("삭제 취소");
+        }
+      }
+    </script>
+  </body>
+</html>

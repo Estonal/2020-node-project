@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+  <body>
+    <%- include("../menu"); %>
+    <form id="q_updateForm">
+      <!-- Material input -->
+      <div class="md-form form-lg">
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"
+          value="<%= result.title %>"
+          class="form-control form-control-lg"
+          required
+        />
+        <label for="title"
+          >문제를 입력하세요(문제 출처나 간단한 문제 자체)</label
+        >
+      </div>
+
+      <div class="view overlay my-4">
+        <img
+          src="data:question/<%=result.qimage.contentType%>;base64,
+              <%=result.qimage.data.toString('base64')%>"
+          class="img-fluid"
+          alt=""
+        />
+      </div>
+
+      <!-- Material input -->
+
+      <div class="form-group shadow-textarea">
+        <label for="contents"
+          >보충 내용(추가해야할 내용이 있다면 작성하세요)</label
+        >
+        <textarea
+          class="form-control z-depth-1"
+          id="contents"
+          name="contents"
+          rows="20"
+          placeholder=""
+        >
+<%= result.contents %></textarea
+        >
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        저장
+      </button>
+    </form>
+
+    <%- include("../footer"); %>
+
+    <script>
+      $(function () {
+        $("#q_updateForm").submit((event) => {
+          event.preventDefault();
+          // 수정
+          const title = $("#title").val();
+          const contents = $("#contents").val();
+
+          $.ajax({
+            url: "/api/note/<%= result.noteid %>/<%= result._id %>",
+            type: "PUT",
+            data: { title, contents },
+          })
+            .done(() => {
+              location.href =
+                "/api/note/<%= result.noteid %>/<%= result._id %>";
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

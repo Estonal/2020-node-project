@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+  <body>
+    <%- include("../menu"); %>
+    <button
+      type="button"
+      onclick="location.href='/api/note/new'"
+      class="btn btn-primary"
+    >
+      새 노트 만들기
+    </button>
+
+    <div class="row row-cols-1 row-cols-md-5">
+      <% result.forEach(note => { %>
+      <div class="col mb-4">
+        <!-- Card -->
+        <div class="card">
+          <!--Card image-->
+          <div class="view overlay">
+            <img
+              class="card-img-top"
+              src="https://cdn.pixabay.com/photo/2017/12/22/08/01/paper-3033204_1280.jpg"
+              alt="Card image cap"
+            />
+            <a href="/api/note/<%=note._id%>">
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+
+          <!--Card content-->
+          <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title"><%= note.title %></h4>
+            <!--Text-->
+            <p class="card-text"><%= note.subject %></p>
+            <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+            <button
+              type="button"
+              class="btn btn-blue btn-md"
+              onclick="location.href= '/api/note/<%=note._id%>'"
+            >
+              자세히
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-light-green btn-md"
+              onclick="location.href= '/api/note/<%=note._id%>/edit'"
+            >
+              수정
+            </button>
+
+            <button
+              id="notedeleteBtn"
+              type="button"
+              class="btn btn-red btn-md"
+              onclick="deletenote('<%=note._id%>')"
+            >
+              삭제
+            </button>
+          </div>
+        </div>
+        <!-- Card -->
+      </div>
+      <% }) %>
+    </div>
+    <%- include("../footer"); %>
+
+    <script>
+      //삭제
+      $(function () {
+        $("#notedeleteBtn").click(() => {
+          console.log("test");
+        });
+      });
+
+      function deletenote(note_id) {
+        const result = confirm("삭제하시겠습니까?");
+        if (result) {
+          $.ajax({
+            url: "/api/note/" + note_id,
+            type: "DELETE",
+          })
+            .done(() => {
+              location.href = "/api/note";
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        } else {
+          console.log("삭제 취소");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../header"); %>
+  <body>
+    <%- include("../menu"); %>
+    <form
+      action="/api/note/<%=noteid%>"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <div>
+        <div class="md-form form-lg">
+          <input
+            type="text"
+            id="title"
+            placeholder=""
+            value=""
+            name="title"
+            required
+            class="form-control form-control-lg"
+          />
+          <label for="title"
+            >문제를 입력하세요(문제 출처나 간단한 문제 자체)</label
+          >
+        </div>
+      </div>
+
+      <div class="form-group shadow-textarea">
+        <label for="contents"
+          >보충 내용(추가해야할 내용이 있다면 작성하세요)</label
+        >
+        <textarea
+          class="form-control z-depth-1"
+          id="contents"
+          name="contents"
+          rows="20"
+          placeholder="....."
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="qimage">이미지(문제)</label>
+        <input type="file" id="qimage" name="qimage" value="" required />
+      </div>
+      <div>
+        <label for="caution"
+          >◈ 주의! 한번 문제를 생성한 후에는 이미지 수정은 불가능합니다! 단,
+          이미지를 제외한 나머지는 수정이 가능합니다!</label
+        >
+      </div>
+      <div>
+        <button class="btn purple-gradient" type="submit">
+          생성
+        </button>
+      </div>
+    </form>
+    <%- include("../footer"); %>
+
+    <script>
+      $(function () {
+        $("#QcreateForm").submit((event) => {
+          event.preventDefault();
+          // 등록
+          const title = $("#title").val();
+          const qimage = $("#qimage").val();
+          const contents = $("#contents").val();
+
+          $.ajax({
+            url: "/api/note/<%=noteid%>",
+            type: "POST",
+            data: { title, qimage, contents },
+          })
+            .done(() => {
+              location.href = "/api/note/<%=noteid%>";
+            })
+            .fail((request, status, error) => {
+              alert(request.responseText);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

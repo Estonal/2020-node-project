@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+ <%- include("../header"); %>
+<body>
+
+ <%- include("../menu"); %>
+<form id="createForm">
+
+
+ <!-- Material input -->
+<div class="md-form">
+    <input
+    type="text"
+    id="title"
+    class="form-control"
+    required
+    />
+    <label for="title">노트 제목을 입력하세요.</label>
+  </div>
+
+ <!-- Material input -->
+<div class="md-form">
+    <input
+    type="text"
+    id="subject"
+    class="form-control"
+    required
+    />
+    <label for="subject">과목을 입력하세요.</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">생성</button>
+</form>
+ <%- include("../footer"); %>
+
+ <script>
+   $(function() {
+     $("#createForm").submit((event) => {
+       event.preventDefault();
+       // 등록
+       const title = $("#title").val();
+       const subject = $("#subject").val();
+       const email = "<%=user.email%>";
+       $.ajax({
+         url: "/api/note",
+         type: "POST",
+         data: { email, title, subject },
+       }).done(() => {
+         location.href = "/api/note";
+       }).fail((request, status, error) => {
+        alert(request.responseText);
+       });
+     });
+   });
+ </script>
+ </body>
+</html>

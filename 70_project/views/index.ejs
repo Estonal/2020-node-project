@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("header"); %>
+  <body>
+    <%- include("menu"); %>
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center">
+      <!-- Title -->
+      <h6 class="indigo-text h5 mb-4">
+        <strong>Site for Problem Resolution</strong>
+      </h6>
+
+      <!-- Card image -->
+      <center>
+        <div class="view overlay my-4">
+          <img
+            src="https://cdn.pixabay.com/photo/2019/09/30/10/12/notredame-de-paris-4515298_960_720.jpg"
+            class="img-fluid"
+            alt=""
+          />
+        </div>
+      </center>
+
+      <% if (user === null) { %>
+
+      <h3 class="card-text">
+        시험에서 낯익은 문제를 보았을 때, 어떻게 문제를 풀었는지 생각이 안나
+        문제를 틀렸던 경험이 있나요?
+      </h3>
+
+      <center>
+        <div class="view overlay my-4">
+          <img
+            src="https://cdn.pixabay.com/photo/2018/02/22/07/03/silhouette-3172280_960_720.png"
+            class="img-fluid"
+            alt=""
+          />
+        </div>
+      </center>
+
+      <h3 class="card-text">
+        문제를 틀렸을 때, "다음에는 생각나겠지." 라 말하며 아무 생각 없이
+        지나쳤다가 낭패를 본 경험이 있지 않나요?
+      </h3>
+
+      <center>
+        <div class="view overlay my-4">
+          <img
+            src="https://cdn.pixabay.com/photo/2019/09/05/05/28/eye-4453129_1280.jpg"
+            class="img-fluid"
+            alt=""
+          />
+        </div>
+      </center>
+
+      <h3 class="card-text">
+        이러한 일이 매번 반복되지만, 그냥 이대로 계속 같은 문제를 틀리도록
+        내버려 둘 건가요?
+      </h3>
+
+      <center>
+        <div class="view overlay my-4">
+          <img
+            src="https://cdn.pixabay.com/photo/2016/03/31/23/00/bicycle-1297333_1280.png"
+            class="img-fluid"
+            alt=""
+          />
+        </div>
+      </center>
+
+      <h3 class="card-text">
+        우리는 지금까지 풀어왔던 문제들은 무시하며, 새로운 문제를 찾는 것에만
+        몰두했죠.
+      </h3>
+      <h3 class="card-text">
+        아직 그 문제들에 대해 완벽히 이해하지도 못했으면서요.
+      </h3>
+
+      <center>
+        <div class="view overlay my-4">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/04/02/16/21/book-307045_960_720.png"
+            class="img-fluid"
+            alt=""
+          />
+        </div>
+      </center>
+
+      <h3 class="card-text">
+        우리는 과거의 일이 되풀이되지 않기 위해, 지금까지 지나쳐왔던,
+      </h3>
+      <h3 class="card-text">
+        과거에 풀었던 문제들을 돌아보아야 합니다.
+      </h3>
+
+      <center>
+        <div class="view overlay my-4">
+          <img
+            src="https://cdn.pixabay.com/photo/2017/01/31/18/44/bible-2026336_1280.png"
+            class="img-fluid"
+            alt=""
+          />
+        </div>
+      </center>
+
+      <h3 class="card-text">
+        지금이 바로, 문제 정리 노트를 작성할 때입니다.
+      </h3>
+
+      <center>
+        <button class="btn btn-dark" onclick="location.href='/api/user/login'">
+          로그인 하기
+        </button>
+        <button
+          class="btn btn-danger"
+          onclick="location.href='/api/user/signup'"
+        >
+          회원가입 하기
+        </button>
+      </center>
+      <% } else { %>
+      <button class="btn btn-danger" onclick="location.href='/api/note/'">
+        내 노트 바로가기
+      </button>
+      <% } %>
+    </div>
+    <%- include("footer"); %>
+  </body>
+</html>
